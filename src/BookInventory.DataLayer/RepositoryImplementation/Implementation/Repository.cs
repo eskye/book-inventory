@@ -43,6 +43,7 @@ namespace BookInventory.DataLayer.RepositoryImplementation.Implementation
         public async Task InsertAsync(TEntity entity)
         {
             await Context.Set<TEntity>().AddAsync(entity);
+            await Context.SaveChangesAsync();
         }
 
         public async Task<TEntity> InsertAndGetEntityAsync(TEntity entity)
@@ -70,6 +71,7 @@ namespace BookInventory.DataLayer.RepositoryImplementation.Implementation
         public void Update(TEntity entity)
         {
             Context.Entry(entity).State = EntityState.Modified;
+            Context.SaveChanges();
 
         }
 
