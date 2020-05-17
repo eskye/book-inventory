@@ -71,7 +71,7 @@ namespace BookInventory.Test
 
             unitOfWorkMock.Setup(c => c.Commit());
 
-            await sut.UpdateBook(new CreateBookDto
+             await sut.UpdateBook(new CreateBookDto
                 { Author = "Author", Isbn = "Isbn", Title = "Title", Year = "2039", Publisher = "Publisher" }, 1);
 
         }
