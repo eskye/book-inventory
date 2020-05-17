@@ -10,7 +10,7 @@ namespace BookInventory.DataLayer.Repositories
 {
     public interface IBookRepository : IRepository<Book>
     {
-        Task<IReadOnlyList<Book>> SearchBook(string searchQuery);
+        Task<IReadOnlyList<Book>> SearchBook(string searchQuery, string clomun);
         Task<IReadOnlyList<Book>> GetListOfBooks();
     }
     public class BookRepository : Repository<Book>,IBookRepository
@@ -19,12 +19,30 @@ namespace BookInventory.DataLayer.Repositories
         {
         }
 
-        public async Task<IReadOnlyList<Book>> SearchBook(string searchQuery)
+        public async Task<IReadOnlyList<Book>> SearchBook(string searchQuery, string column)
         {
-            var result = await WhereAsync(x => x.Author.Equals(searchQuery, StringComparison.OrdinalIgnoreCase)
-                                               || x.Title.Equals(searchQuery, StringComparison.OrdinalIgnoreCase)
-                                               || x.Isbn.Equals(searchQuery, StringComparison.OrdinalIgnoreCase));
-            return result.ToList();
+            var result = new List<Book>();
+            if (column == "Author")
+            {
+                var response = await WhereAsync(x => x.Author == searchQuery);
+                result = response.ToList();
+            }
+            else if(column == "Title")
+            {
+                var response = await WhereAsync(x => x.Title == searchQuery);
+                result = response.ToList();
+            }else if (column == "Isbn")
+            {
+                var response = await WhereAsync(x => x.Isbn == searchQuery);
+                result = response.ToList();
+            }
+            else
+            {
+                var response = await WhereAsync(x => x.Title.StartsWith(searchQuery));
+                result = response.ToList();
+            }
+
+            return result;
         }
 
         public async Task<IReadOnlyList<Book>> GetListOfBooks()

@@ -15,7 +15,7 @@ namespace BookInventory.Logic.Services
         Task UpdateBook(CreateBookDto model, long bookId);
         Task DeleteBook(long bookId);
         Task<IReadOnlyList<BookListDto>> GetListOfBooks();
-        Task<IReadOnlyList<BookListDto>> SearchBook(string query);
+        Task<IReadOnlyList<BookListDto>> SearchBook(string query, string column);
     }
     public class BookService : IBookService
     {
@@ -99,9 +99,9 @@ namespace BookInventory.Logic.Services
         }
 
         
-        public async Task<IReadOnlyList<BookListDto>> SearchBook(string query)
+        public async Task<IReadOnlyList<BookListDto>> SearchBook(string query, string column)
         {
-            var entities = await _bookRepository.SearchBook(query);
+            var entities = await _bookRepository.SearchBook(query, column);
             return ProcessQuery(entities);
         }
 
