@@ -60,6 +60,7 @@ namespace BookInventory.Api
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Book Inventory Management System Api V1");
             });
 
+            app.UseMiddleware<ErrorMiddleware>();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
