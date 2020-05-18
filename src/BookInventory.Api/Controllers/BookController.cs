@@ -46,7 +46,7 @@ namespace BookInventory.Api.Controllers
                 Publisher = model.Publisher
             };
              await _bookService.AddBook(createBookDto);
-            return Created("", new object());
+            return Created("", "Book Created Successfully");
         }
 
         [HttpPut("{id}")]
